@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Credit Card Application</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand">
+      <div class="brand-mark">CC</div>
+      <h1>Credit Card Application</h1>
+    </div>
+    <p class="intro">Fill in your details below and we'll instantly tell you whether your application is approved.</p>
+
+    <form action="/predict" method="post">
+      <div class="card">
+        <h2>Your details</h2>
+        <div class="field">
+          <label for="name">Full name</label>
+          <input type="text" id="name" name="name" placeholder="e.g. Priya Sharma" required>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="age">Age</label>
+            <input type="number" id="age" name="age" min="18" max="100" value="30" required>
+          </div>
+          <div class="field">
+            <label for="num_children">Dependents</label>
+            <input type="number" id="num_children" name="num_children" min="0" max="10" value="0" required>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="family_status">Marital status</label>
+            <select id="family_status" name="family_status">
+              {% for f in family_statuses %}<option value="{{ f }}">{{ f }}</option>{% endfor %}
+            </select>
+          </div>
+          <div class="field">
+            <label for="housing_type">Living situation</label>
+            <select id="housing_type" name="housing_type">
+              {% for h in housing_types %}<option value="{{ h }}">{{ h }}</option>{% endfor %}
+            </select>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="owns_car">Own a car?</label>
+            <select id="owns_car" name="owns_car">
+              <option value="Y">Yes</option>
+              <option value="N">No</option>
+            </select>
+          </div>
+          <div class="field">
+            <label for="owns_realty">Own property?</label>
+            <select id="owns_realty" name="owns_realty">
+              <option value="Y">Yes</option>
+              <option value="N">No</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Occupation &amp; income</h2>
+        <div class="field">
+          <label for="income_type">Occupation</label>
+          <select id="income_type" name="income_type">
+            <option value="Working">Salaried employee</option>
+            <option value="Commercial associate">Self-employed / business</option>
+            <option value="State servant">Government employee</option>
+            <option value="Pensioner">Retired / pensioner</option>
+            <option value="Student">Student</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="education_type">Education</label>
+          <select id="education_type" name="education_type">
+            {% for e in education_types %}<option value="{{ e }}">{{ e }}</option>{% endfor %}
+          </select>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="annual_income">Annual salary (USD)</label>
+            <input type="number" step="0.01" id="annual_income" name="annual_income" value="45000" required>
+          </div>
+          <div class="field">
+            <label for="years_employed">Years employed</label>
+            <input type="number" step="0.1" id="years_employed" name="years_employed" value="3.0" required>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h2>Credit history</h2>
+        <div class="field-row">
+          <div class="field">
+            <label for="past_defaults">Past defaults</label>
+            <input type="number" id="past_defaults" name="past_defaults" min="0" value="0" required>
+          </div>
+          <div class="field">
+            <label for="overdue_months">Overdue months</label>
+            <input type="number" id="overdue_months" name="overdue_months" min="0" value="0" required>
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="credit_utilization">Credit usage (0&ndash;1)</label>
+            <input type="number" step="0.01" min="0" max="1" id="credit_utilization" name="credit_utilization" value="0.3" required>
+          </div>
+          <div class="field">
+            <label for="existing_credit_lines">Existing credit lines</label>
+            <input type="number" id="existing_credit_lines" name="existing_credit_lines" min="0" value="2" required>
+          </div>
+        </div>
+      </div>
+
+      <button type="submit" class="submit">Submit application</button>
+    </form>
+
+    <p class="footnote">Demo application &middot; scored by {{ model_name }} &middot; not a real credit decision</p>
+  </div>
+</body>
+</html>

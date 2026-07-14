@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Application Status</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div class="wrap">
+    <div class="brand">
+      <div class="brand-mark">CC</div>
+      <h1>Credit Card Application</h1>
+    </div>
+
+    {% if result == "Approved" %}
+    <div class="result-card">
+      <div class="status-icon approved">&#10003;</div>
+      <p class="status-title approved">Application approved</p>
+      <p class="status-message">Congratulations, {{ name }}. Based on the details you provided, your credit card application has been approved.</p>
+      <div class="confidence-row">
+        <span>Approval confidence</span>
+        <strong>{{ probability }}%</strong>
+      </div>
+      <div class="bar-track"><div class="bar-fill approved" style="width: {{ probability }}%;"></div></div>
+    </div>
+    {% else %}
+    <div class="result-card">
+      <div class="status-icon rejected">&#10005;</div>
+      <p class="status-title rejected">Application not approved</p>
+      <p class="status-message">Sorry, {{ name }}. Based on the details you provided, we're unable to approve your credit card application at this time.</p>
+      <div class="confidence-row">
+        <span>Approval confidence</span>
+        <strong>{{ probability }}%</strong>
+      </div>
+      <div class="bar-track"><div class="bar-fill rejected" style="width: {{ probability }}%;"></div></div>
+    </div>
+    {% endif %}
+
+    <a href="/" class="back-btn">&larr; Submit another application</a>
+    <p class="footnote">Demo application &middot; scored by {{ model_name }} &middot; not a real credit decision</p>
+  </div>
+</body>
+</html>
